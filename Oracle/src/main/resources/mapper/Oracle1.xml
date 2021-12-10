@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="dao.Oracle1">
-    <update id="update">
+    <update id="update1">
         merge into t68_audit_txn t1
         using (select a.eventkey
                 from(select row_number() over(order by t.eventkey) as seq,t.*
@@ -9,12 +9,12 @@
                         where tradedt='2017-07-19') a
                 join(select n
                     from (select distinct rownum as rn,n
-                            from (select distinct round(dbms_random.value(1,24),0)as n from dual connect by level <=24
+                            from (select distinct round(dbms_random.value(1,24),0)as n from dual connect by level <![CDATA[ <= ]]>   24
                                 union all
-                                  select distinct round(dbms_random.value(1,24),0)as n from dual connect by level <=24
+                                  select distinct round(dbms_random.value(1,24),0)as n from dual connect by level <![CDATA[ <= ]]>   24
                                   )
                            )
-                        where rownum <=10) b
+                        where rownum <![CDATA[ <= ]]]> 10) b
                          on a.seq=b.n) t2
         on (t1.eventkey=t2.eventkey)
         when matched then
